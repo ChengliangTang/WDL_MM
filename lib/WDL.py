@@ -181,7 +181,7 @@ def WDL(X_train, Y_train, X_val, Y_val, q_vec, K=2, init='EM', warm_up=30,
         ## step 2 + 3. find the optimal decomposition of g, and then update \mu and \sigma 
         for j in range(n_train):
             y_hat = qgmm1d(q_vec, mu_train[j], sd_train[j], pi_train[j])
-            R = np.array([alpha_train[j, k] + norm.logpdf(Y_train[j], mu_train[j, k], sd_train[j, k]) for k in range(K)])
+            R = np.array([alpha_train[j, k] + norm.logpdf(y_hat, mu_train[j, k], sd_train[j, k]) for k in range(K)])
             R = R - np.max(R, axis=0)
             R = np.exp(R)
             R += eps ## prevent exploding
